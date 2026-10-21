@@ -33,10 +33,8 @@
         <div class="ear right">${(() => { const t = F.earRight.split(" · ").map(esc); const h = Math.ceil(t.length / 2); return t.slice(0, h).join(" · ") + "<br>" + t.slice(h).join(" · "); })()}</div>
       </div>
       <div class="dateline"><span>${esc(F.edition)}</span><span>${esc(F.date)}</span><span>${esc(F.price)}</span></div>
-      <div class="contact-bar" aria-label="Contact">
-        <span class="cb-l">${P.linkedin ? `<a href="${esc(P.linkedin)}" target="_blank" rel="noopener">LinkedIn</a>` : ""}</span>
-        <span class="cb-c">${esc(P.phone || "")}</span>
-        <span class="cb-r">${esc(P.email || "")}</span>
+      <div class="contact-bar cb-one" aria-label="Contact">
+        ${P.linkedin ? `<a href="${esc(P.linkedin)}" target="_blank" rel="noopener">LinkedIn</a>` : ""}${P.linkedin && P.email ? `<span class="cb-sep" aria-hidden="true">|</span>` : ""}${P.email ? `<a href="mailto:${esc(P.email)}">${esc(P.email)}</a>` : ""}
       </div>
       <div class="above-fold">
         <div class="kicker">${esc(F.kicker)}</div>
