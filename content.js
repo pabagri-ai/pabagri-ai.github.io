@@ -41,18 +41,19 @@ window.CONTENT = {
       "Bagri is at her best when she is mobilizing people toward a common goal. In her Hyderabad community she brought 650 resident families to vote for one direction, and she did it by showing every side what the change would mean for them. It was a win built on communication, not authority.",
       "She found the same energy in India's wedding market, one of its most disorganised industries. In 2022 she co-founded WedNet to bring couples, guests and vendors into one place, built a team of six, and ran countless vendor interviews, guest surveys and prototypes, learning each new skill as the work demanded it.",
       "When the research showed the market was closed to an open platform, she made the call most founders avoid. She stopped before launch and protected about 47% of the starting capital.",
+      "She knows that the best solutions are not built once and handed off. They are shaped through feedback loops, stakeholder input, and a constant focus on value.",
       "\u201cI am kinetic. I learn as I go,\u201d she said. \u201cWhat helps me is that I am highly organised and motivated, and my motivation comes from wanting to take something to its final delivery and create impact.\u201d",
       "She loves technology and the processes behind it, and delivering in technology is what excites her most. She is driven to join the technical side of project teams and wishes to work with cross-functional teams, and for this she is honing the skills to understand the full spectrum in which these teams perform.",
       "To get there, she is pursuing a Master of Science in Project Management at Harrisburg University of Science and Technology in Pennsylvania, with a concentration in Information Systems Engineering and Management, and she holds a GPA of 4.00. Her focus is AI programs, and getting hands-on with projects that deliver real impact."
     ],
     pullQuote: "\u201cI am kinetic. I learn as I go.\u201d",
-    pullAfter: 7, // the pull quote sits after this paragraph
+    pullAfter: 8, // the pull quote sits after this paragraph
     breakout: "She brought 650 families to one vote by showing them what it meant for them.",
     breakoutAfter: 2, // the bold breakout line sits after this paragraph
     breakout2: "She feels the most energised when she is mobilizing people toward a common goal.",
     breakout2After: 3, // a second bold line at the bottom of the left column
     breakout3: "She set up the workflows, wrote the requirements and ran the testing that told her when to stop.",
-    breakout3After: 5, // a bold line in the right column
+    breakout3After: 6, // a bold line in the right column
     spotlight: {
       title: "Spotlight",
       sub: "What she believes",
