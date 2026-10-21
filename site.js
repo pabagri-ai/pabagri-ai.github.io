@@ -401,36 +401,47 @@
     const tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tex);
     [gl.TEXTURE_WRAP_S, gl.TEXTURE_WRAP_T].forEach(k => gl.texParameteri(gl.TEXTURE_2D, k, gl.CLAMP_TO_EDGE));
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    let ready = false;
+    let ready = false, cur = vid, lastT = -1, lastV = null;
+    // after she finishes talking, a silent clip of her waving and standing at ease loops while people read
+    const idle = V.idle ? document.createElement("video") : null;
+    if (idle) {
+      Object.assign(idle, { src: idle.canPlayType('video/mp4; codecs="avc1.640028"') ? V.idle : V.idle.replace(/\.mp4$/, ".webm"), muted: true, loop: true, playsInline: true, preload: "auto" });
+      idle.setAttribute("playsinline", ""); idle.setAttribute("muted", "");
+    }
     const draw = () => {
-      if (vid.readyState >= 2) {
+      if (cur.readyState >= 2 && (cur.currentTime !== lastT || cur !== lastV)) {
+        lastT = cur.currentTime; lastV = cur;
         const dpr = Math.min(window.devicePixelRatio || 1, 2), w = Math.round(box.clientWidth * dpr), h = Math.round(box.clientHeight * dpr);
         if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
         gl.viewport(0, 0, w, h);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, vid);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, cur);
         gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
         if (!ready) { ready = true; box.classList.add("live"); }
       }
-      (vid.requestVideoFrameCallback ? vid.requestVideoFrameCallback.bind(vid) : requestAnimationFrame)(draw);
+      requestAnimationFrame(draw);
     };
     vid.addEventListener("loadeddata", () => draw(), { once: true });
-    // She talks once, the first time she is on screen, then stands still in her final pose
-    // (the still photo). "Sound on" plays her line again from the start, with her voice.
-    let done = false;
+    // She talks once, the first time she is on screen, then waves and stands at ease on a loop
+    // (or, with no idle clip, stands still in her final pose). "Play with sound" replays her intro.
+    let talked = false, onScreen = false;
     new IntersectionObserver(es => es.forEach(e => {
-      if (done) return;
-      e.isIntersecting ? vid.play().catch(() => {}) : vid.pause();
+      onScreen = e.isIntersecting;
+      if (!onScreen) { cur.pause(); return; }
+      cur.play().catch(() => {});
     })).observe(box);
-    vid.addEventListener("ended", () => {
-      done = true; box.classList.add("ended");
+    const toIdle = () => {
       vid.muted = true; btn.textContent = "Play with sound"; btn.setAttribute("aria-pressed", "false");
-    });
+      if (idle) { cur = idle; idle.currentTime = 0; if (onScreen) idle.play().catch(() => {}); }
+      else box.classList.add("ended");
+    };
+    vid.addEventListener("ended", () => { talked = true; toIdle(); });
     btn.onclick = () => {
-      if (!vid.muted && !vid.paused) {                     // playing with sound: mute it
+      if (cur === vid && !vid.muted && !vid.paused) {        // playing with sound: mute it
         vid.muted = true; btn.textContent = "Sound on"; btn.setAttribute("aria-pressed", "false"); return;
       }
-      box.classList.remove("ended");
+      if (idle) idle.pause();
+      box.classList.remove("ended"); cur = vid;
       vid.muted = false; vid.currentTime = 0; vid.play().catch(() => {});
       btn.textContent = "Sound off"; btn.setAttribute("aria-pressed", "true");
     };

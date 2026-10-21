@@ -14,7 +14,7 @@ window.CONTENT = {
     linkedin: "https://www.linkedin.com/in/priyal-bagri-003b93365/",
     phone: "", // left blank so the public site shows only LinkedIn and email
     photo: "assets/photos/priyal.jpg",
-    avatar: { src: "assets/avatar/priyal-talking.mp4", poster: "assets/avatar/priyal-cutout.png", still: "assets/avatar/priyal-still.png", aspect: 0.3416 }, // cut-out talking video: colour on the left half, see-through mask on the right half
+    avatar: { src: "assets/avatar/priyal-talking.mp4", poster: "assets/avatar/priyal-cutout.png", still: "assets/avatar/priyal-still.png", idle: "assets/avatar/priyal-idle.mp4", aspect: 0.3416 }, // cut-out talking video: colour on the left half, see-through mask on the right half
     video: "", // a short moving-photo clip, e.g. "assets/photos/priyal-moving.mp4" (plays silently on loop, sound on tap)
     motto: "I mobilize teams to deliver work that creates direct impact."
   },
