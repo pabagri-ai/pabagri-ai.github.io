@@ -590,3 +590,14 @@ button.at-row:hover, button.at-row[aria-expanded="true"] { background: var(--mar
 .contact-bar.cb-one { display: flex; justify-content: center; align-items: center; gap: 14px; }
 .cb-one a { color: var(--green); }
 .cb-sep { color: var(--rule); }
+
+/* ---- phones: shorter, cleaner story ---- */
+.more-story { display: none; }
+@media (max-width: 860px) {
+  .story-grid p { text-align: left; hyphens: manual; }
+  .bo-wide { display: none; }
+  .story-grid.short { max-height: 1500px; overflow: hidden; position: relative; }
+  .story-grid.short::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 120px; background: linear-gradient(rgba(244,243,239,0), var(--sheet)); pointer-events: none; }
+  .more-story { display: block; margin: 6px auto 18px; background: var(--green); color: #fff; border: 0; border-radius: var(--radius-pill); padding: 10px 22px; font-family: var(--font-data); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; }
+}
+@media (max-width: 860px) { .sp-cols { text-align: left; hyphens: manual; } }

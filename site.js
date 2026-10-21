@@ -14,8 +14,8 @@
     const para = (t, i) => `<p>${rich(t)}</p>`
       + (i === F.pullAfter ? `<blockquote class="pq"><span class="pq-mark" aria-hidden="true">\u201C</span>${esc(F.pullQuote.replace(/^[\u201C"]|[\u201D"]$/g, ""))}</blockquote>` : "")
       + (F.breakout && i === F.breakoutAfter ? `<p class="breakout">${esc(F.breakout)}</p>` : "")
-      + (F.breakout2 && i === F.breakout2After ? `<p class="breakout">${esc(F.breakout2)}</p>` : "")
-      + (F.breakout3 && i === F.breakout3After ? `<p class="breakout">${esc(F.breakout3)}</p>` : "");
+      + (F.breakout2 && i === F.breakout2After ? `<p class="breakout bo-wide">${esc(F.breakout2)}</p>` : "")
+      + (F.breakout3 && i === F.breakout3After ? `<p class="breakout bo-wide">${esc(F.breakout3)}</p>` : "");
     const left = F.article.slice(0, F.split).map((t, i) => para(t, i)).join("");
     const right = F.article.slice(F.split).map((t, i) => para(t, i + F.split)).join("");
     const photo = P.video
@@ -49,6 +49,7 @@
           </figure>`}
           <div class="col col-r">${right}</div>
         </div>
+        <button type="button" class="more-story" id="moreStory" aria-expanded="false">Continue reading ↓</button>
         ${F.spotlight ? `<section class="spotlight" aria-label="${esc(F.spotlight.title)}">
           <div class="sp-head"><span class="sp-mark" aria-hidden="true">\u201C</span><div><h3>${esc(F.spotlight.title)}</h3><p class="sp-sub">${esc(F.spotlight.sub)}</p></div></div>
           <div class="sp-cols">${F.spotlight.body.map(t => `<p>${rich(t)}</p>`).join("")}</div>
@@ -377,6 +378,14 @@
     const h = Math.max(200, bottom - top), w = h * A;
     Object.assign(box.style, { top: top + "px", height: h + "px", width: w + "px", left: (cx - w / 2) + "px" });
   }
+  // phones: the story opens short, with a "Continue reading" button
+  function initMore() {
+    const b = $("#moreStory"), g = $(".story-grid"); if (!b || !g) return;
+    g.classList.add("short");
+    b.onclick = () => { const open = g.classList.toggle("short") === false;
+      b.setAttribute("aria-expanded", String(open)); b.textContent = open ? "Show less ↑" : "Continue reading ↓";
+      if (!open) g.scrollIntoView({ behavior: "smooth", block: "start" }); };
+  }
   function initAvatar() {
     const box = $("#avatar"); if (!box) return;
     const V = C.person.avatar, canvas = $("#avc"), btn = $("#avsound");
@@ -570,6 +579,6 @@
     window.addEventListener("load", () => ScrollTrigger.refresh());
   }
 
-  renderFront(); renderSearch(); renderHoldings(); renderGrowth(); renderProud(); renderRest(); wireStories(); initAvatar();
+  renderFront(); renderSearch(); renderHoldings(); renderGrowth(); renderProud(); renderRest(); wireStories(); initMore(); initAvatar();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(animate); else animate();
 })();
