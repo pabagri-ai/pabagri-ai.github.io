@@ -24,7 +24,7 @@
   const starts = chips.map((_, i) => { const a = rnd(i, 1) * Math.PI * 2, d = .75 + rnd(i, 2) * .6; return [Math.cos(a) * d, Math.sin(a) * d, .2 + rnd(i, 3) * .4]; });
   const oPage = $(".orbit-page"), oHer = $(".o-her"), oHead = $(".o-head"), stage = $(".slide-stage"), jPanel = $(".slide-pin > .journey");
   const clamp = v => Math.min(1, Math.max(0, v)), ease = v => 1 - Math.pow(1 - v, 3);
-  let spinT = .6, last = performance.now(), oStart = null, sT = 0, orbitPlay = () => {};
+  let spinT = .6, last = performance.now(), oStart = null, sT = 0, opening = false, orbitPlay = () => {}, orbitReset = () => {};
   function spin(now) {
     const w = innerWidth, h = innerHeight, mobile = w <= 860;
     // transition: nothing moves until the visitor has scrolled 16% past the Journey page,
@@ -35,8 +35,10 @@
     const e = sT * sT * (3 - 2 * sT), cx = mobile ? 50 : 62;
     oPage.style.clipPath = e >= 1 ? "none" : `circle(${(e * 150).toFixed(2)}% at ${cx}% 55%)`;
     jPanel.style.transform = e > 0 ? `scale(${(1 - e * .08).toFixed(4)})` : ""; jPanel.style.filter = e > 0 && e < 1 ? `blur(${(e * 6).toFixed(1)}px)` : "";
+    // the circle always opens on the first frame of her video; it only plays once the circle is fully open
+    if (sT > 0 && !opening) { opening = true; orbitReset(); }
     if (sT >= 1 && oStart === null) { oStart = now; orbitPlay(); }
-    if (sT <= 0) oStart = null;
+    if (sT <= 0) { oStart = null; if (opening) { opening = false; orbitReset(); } }
     const p = reduce ? 1 : (oStart === null ? 0 : clamp((now - oStart) / 2800));
     oHer.style.transform = "translateX(-50%)";
     // 3) the heading slides in last
@@ -343,8 +345,10 @@
 
   // Skills in orbit: she looks around as the skills form, then folds her arms and holds that pose
   const oher = $("#oher"), drawOrbit = oher ? renderer($("#oc"), oher) : null;
+  let lastO = -1, lastW = -1;
   const look = mk("assets/priyal-look");
   orbitPlay = () => { look.currentTime = 0; look.play().catch(() => {}); };
+  orbitReset = () => { look.pause(); look.currentTime = 0; lastO = -1; };
   // Let's talk: she walks in, plays once each time the section comes into view
   const ther = $("#ther"), drawTalk = ther ? renderer($("#tc"), ther) : null;
   const walk = mk("assets/priyal-walk");
@@ -352,10 +356,9 @@
     if (en.intersectionRatio >= .4) { if (walk.paused) { walk.currentTime = 0; walk.play().catch(() => {}); } }
     else if (!en.isIntersecting) { walk.pause(); walk.currentTime = 0; }
   }), { threshold: [0, .4] }).observe(ther);
-  let lastO = -1, lastW = -1;
   (function draw2() {
-    if (drawOrbit && look.readyState >= 2 && look.currentTime !== lastO && near(oher)) { lastO = look.currentTime; drawOrbit(look); }
-    if (drawTalk && walk.readyState >= 2 && walk.currentTime !== lastW && near(ther)) { lastW = walk.currentTime; drawTalk(walk); }
+    if (drawOrbit && look.readyState >= 2 && !look.seeking && look.currentTime !== lastO && near(oher)) { lastO = look.currentTime; drawOrbit(look); }
+    if (drawTalk && walk.readyState >= 2 && !walk.seeking && walk.currentTime !== lastW && near(ther)) { lastW = walk.currentTime; drawTalk(walk); }
     requestAnimationFrame(draw2);
   })();
 
