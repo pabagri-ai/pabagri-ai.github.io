@@ -27,10 +27,10 @@
   let spinT = .6, last = performance.now(), oStart = null, sT = 0, opening = false, orbitPlay = () => {}, orbitReset = () => {};
   function spin(now) {
     const w = innerWidth, h = innerHeight, mobile = w <= 860;
-    // transition: nothing moves until the visitor has scrolled 16% past the Journey page,
+    // transition: nothing moves until the visitor has scrolled 25% past the Journey page,
     // then a circle opens from where she stands, by itself, and closes again if they scroll back
     const sr = stage.getBoundingClientRect(), q = clamp(-sr.top / (sr.height - h));
-    const target = (reduce || q >= .16) ? 1 : 0, dt = Math.min(.05, (now - last) / 1000);
+    const target = (reduce || q >= .25) ? 1 : 0, dt = Math.min(.05, (now - last) / 1000);
     sT = target > sT ? Math.min(1, sT + dt / 1.1) : Math.max(0, sT - dt / .8);
     const e = sT * sT * (3 - 2 * sT), cx = mobile ? 50 : 62;
     oPage.style.clipPath = e >= 1 ? "none" : `circle(${(e * 150).toFixed(2)}% at ${cx}% 55%)`;
