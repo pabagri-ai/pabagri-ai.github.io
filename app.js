@@ -73,7 +73,7 @@
     { y: "2016", t: "Managing partner", d: "Nathibai Tulsidas Investments, Nagpur." },
     { y: "2021", t: "Bachelor of Commerce", d: "Rashtrasant Tukadoji Maharaj Nagpur University." },
     { y: "2021", t: "Forbes India", d: "Featured in \u201cWomen of Dalal Street\u201d. Invited speaker at FICCI FLO Ahmedabad." },
-    { y: "2022", t: "Founder, WedNet", d: "Took an idea to a tested prototype with a team of six. Stopped it before launch when the data said no." },
+    { y: "2022", t: "Founder, WedNet", d: "A platform bringing couples, guests and vendors together to plan weddings in one place." },
     { y: "2023", t: "650 families, one vote", d: "Led a campaign that brought my community to agree on new rules." },
     { y: "2026", t: "Master's, Project Management", d: "Harrisburg University. Information Systems Engineering and Management. GPA 4.00." },
     { y: "2028", t: "Graduation", d: "Next: tech and AI programs, delivering work that makes a real impact." }
