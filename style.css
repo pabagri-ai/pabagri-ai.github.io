@@ -328,3 +328,5 @@ a { color: inherit; text-decoration: none; }
   .rc-grid { grid-template-columns: 1fr; gap: 40px; }
   .cert { min-height: 0; }
 }
+.c-link { display: inline-block; margin-top: 12px; font: 600 .82rem var(--body); color: var(--blue); border-bottom: 1px solid currentColor; padding-bottom: 1px; position: relative; z-index: 6; }
+.c-link:hover { color: var(--blue-deep); }
