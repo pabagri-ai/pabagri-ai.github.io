@@ -3,38 +3,149 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Portfolio</title>
-<meta name="description" content="Priyal Bagri: investor, founder, and project management graduate student moving into tech program management.">
+<title>Priyal Bagri · Project Manager</title>
+<meta name="description" content="Priyal Bagri: investor, trader and founder turned technical project manager.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@700&family=Caveat:wght@500&family=Pinyon+Script&family=IBM+Plex+Mono:wght@400;500&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Playfair+Display+SC:wght@900&family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,400&display=swap">
-<link rel="stylesheet" href="theme.css">
-<link rel="stylesheet" href="site.css">
-<meta property="og:title" content="The Portfolio · Priyal Bagri">
-<meta property="og:description" content="Investor, founder and project manager. Built to deliver.">
-<meta property="og:image" content="https://pabagri-ai.github.io/assets/avatar/priyal-still.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header id="front" class="gutter"><div class="wrap paper" id="paper"></div></header>
-<div class="tickers" id="tickers" aria-label="Highlights"></div>
 
-<section id="search" class="gutter" aria-label="Searching for Priyal"></section>
+<header class="nav">
+  <a class="brand" href="#top">PRIYAL<span>•</span></a>
+  <nav aria-label="Sections">
+    <a href="#about">About</a><a href="#journey">Journey</a><a href="#toolkit">Toolkit</a><a href="#recognition">Recognition</a><a class="cta" href="#talk">Let's talk</a>
+  </nav>
+</header>
 
-<section id="holdings" class="section gutter" aria-labelledby="h-holdings"><div class="wrap" id="holdings-in"></div></section>
+<main>
+  <div class="stage" id="stage">
+  <section class="hero" id="top" aria-label="Introduction">
+    <div class="grid-bg" aria-hidden="true"></div>
+    <h1 class="giant" id="giant" aria-label="Priyal"><span>P</span><span>R</span><span>I</span><span>Y</span><span>A</span><span>L</span></h1>
 
-<section id="growth" class="section gutter" aria-labelledby="h-growth"><div class="wrap" id="growth-in"></div></section>
+    <div class="person" id="person" role="img" aria-label="Priyal Bagri, standing with a hand in her pocket">
+      <img class="poster" src="assets/priyal-cutout.png" alt="">
+      <canvas id="pc"></canvas>
+    </div>
 
-<section id="proud" class="section gutter" aria-labelledby="h-proud"><div class="wrap" id="proud-in"></div></section>
+    <div class="hero-left">
+      <p class="hello">Hi, I'm <b>Priyal Bagri</b></p>
+      <p class="small" id="kicker">Investor • Trader • Founder turned</p>
+      <p class="big" id="pmtitle"><span class="l1">PROJECT</span><br><span class="l2">MANAGER<span>.</span></span></p>
+      <p class="pitch">I turn complex projects into finished delivery by getting the right people talking, on board and moving toward one goal.</p>
+      <div class="btns"><a class="btn solid" href="#about">About me ↘</a><button class="btn ghost" id="intro" type="button">▶ Hear my intro</button></div>
+    </div>
 
-<section id="headed" class="section gutter" aria-labelledby="h-headed"><div class="wrap" id="headed-in"></div></section>
+    <div class="scroll-cue" aria-hidden="true">Scroll</div>
+  </section>
+  </div>
 
-<section id="closing" class="gutter"><div class="wrap" id="closing-in"></div></section>
+  <section class="sec rise about" id="about">
+    <div class="ab-wrap">
+      <div class="ab-left">
+        <p class="kick">(01) — About</p>
+        <h2 class="ab-title">Built to<br><span>deliver.</span></h2>
+      </div>
+      <div class="ab-right">
+        <p class="ab-p ab-lead">I’m a founder and investor turned project manager who takes complex work from first idea to finished delivery. I taught myself how to trade in the stock market and grew my capital from $50,000 to $600,000 as a disciplined, diversified investor, and Forbes India named me one of its “Women of Dalal Street” and FICCI FLO invited me to speak in Ahmedabad. I founded WedNet to fix a gap I saw as a customer, led a year of research, built a team of six on a tight budget, and stopped before launch when the data said no, protecting over 80% of the capital. I ran both sides of it, the product side with user research, pricing and requirements, and the project side with the team, the budget and the partner negotiations.</p>
+        <p class="ab-p">I led a campaign across 650 households and kept them with me through strong opposition by building trust one conversation at a time. I’m completing my Master’s in Project Management at Harrisburg University with a 4.00 GPA and a concentration in Information Systems Engineering and Management, where I’m learning how AI, systems and enterprise architecture come together to transform how businesses run. I start with the user, write clear requirements, manage scope, risk and budget, keep every stakeholder informed, and test early so we learn before we spend. I’m kinetic, I learn as I go, and nothing excites me more than seeing work through to delivery and watching it make an impact.</p>
+      </div>
+    </div>
+  </section>
+  <section class="journey" id="journey" aria-label="Journey">
+    <div class="j-pin">
+      <div class="j-years" aria-hidden="true"><div class="j-ytrack" id="ytrack"></div></div>
+      <img class="j-her" src="assets/priyal-torso.png" alt="Priyal Bagri">
+      <div class="j-side">
+        <p class="kick">(02) — Journey</p>
+        <h2 class="j-title">Kinetic.<br><span>Learning as I go.</span></h2>
+        <div class="j-list"><div class="j-ltrack" id="ltrack"></div></div>
+      </div>
+      <div class="j-bar"><i id="jbar"></i></div>
+    </div>
+  </section>
+  <section class="orbit-page" id="toolkit" aria-label="Tools I use">
+    <div class="o-pin">
+    <div class="o-head">
+      <p class="kick">(03) — Toolkit</p>
+      <h2 class="o-title">Everything<br>in <span>orbit.</span></h2>
+      <p class="o-sub">The skills and tools I use to plan, track, report and deliver.</p>
+    </div>
+    <div class="orbit" id="orbit" aria-hidden="true"></div>
+    <img class="o-her" src="assets/priyal-cutout.png" alt="Priyal Bagri">
+      </div>
+  </section>
+  <section class="toolkit" id="table" aria-label="Toolkit">
+    <div class="tk-head">
+      <p class="kick">(03) — Toolkit, in detail</p>
+      <h2 class="tk-title">The periodic table <span>of my stack.</span></h2>
+      <p class="tk-sub">Tools, certificates, degrees and experience in one table. Hover a tile to see what it is, or pick a family to light it up.</p>
+      <div class="tk-fams" id="fams" role="tablist"></div>
+      <div class="tk-key"><span class="k done"></span>Done <span class="k now"></span>In progress <span class="k next"></span>Planned</div>
+    </div>
+    <div class="tk-body">
+      <div class="tk-grid" id="ptable"></div>
+      <aside class="tk-panel" id="tpanel" aria-live="polite"></aside>
+    </div>
+  </section>
+  <section class="recog" id="recognition" aria-label="Recognition">
+    <div class="rc-head">
+      <p class="kick">(04) — Recognition</p>
+      <h2 class="rc-title">Recog<span>nition.</span></h2>
+    </div>
+    <div class="rc-grid">
+      <div class="cert-wrap"><article class="cert">
+        <p class="c-top">Featured</p>
+        <h3 class="c-name">Forbes India</h3>
+        <p class="c-line">Named one of the “Women of Dalal Street”</p>
+        <p class="c-for">Stock market investing</p>
+        <div class="c-foot"><span class="c-seal">2021</span><span class="c-sign">Forbes India</span></div>
+      </article><div class="roll" aria-hidden="true"></div></div>
+      <div class="cert-wrap"><article class="cert">
+        <p class="c-top">Invited speaker</p>
+        <h3 class="c-name">FICCI FLO</h3>
+        <p class="c-line">Invited to speak in Ahmedabad</p>
+        <p class="c-for">FICCI Ladies Organisation</p>
+        <div class="c-foot"><span class="c-seal">2021</span><span class="c-sign">Ahmedabad, India</span></div>
+      </article><div class="roll" aria-hidden="true"></div></div>
+      <div class="cert-wrap"><article class="cert">
+        <p class="c-top">Academic excellence</p>
+        <h3 class="c-name">4.00 GPA</h3>
+        <p class="c-line">Master of Science in Project Management</p>
+        <p class="c-for">Harrisburg University of Science and Technology</p>
+        <div class="c-foot"><span class="c-seal">2026</span><span class="c-sign">Information Systems Engineering and Management</span></div>
+      </article><div class="roll" aria-hidden="true"></div></div>
+    </div>
+  </section>
+  <section class="talk curtain from-left" id="talk" aria-label="Contact">
+    <div class="t-in">
+      <p class="kick">(05) — Contact</p>
+      <h2 class="t-big">Let's<br>talk<span>.</span></h2>
+      <p class="t-line">Building something where tech and people have to move together? I'd like to hear about it.</p>
+      <div class="t-btns">
+        <a class="t-btn solid" href="mailto:priyalbagri30@gmail.com">priyalbagri30@gmail.com ↗</a>
+        <a class="t-btn" href="https://www.linkedin.com/in/priyal-bagri-003b93365/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </div>
+    </div>
+    <div class="badge-wrap" aria-label="Priyal's ID badge">
+      <div class="lanyard"></div>
+      <div class="badge" id="badge">
+        <div class="b-clip"></div>
+        <div class="b-top"><span class="b-logo">PB</span><div><b>PROJECT MANAGER ID</b><small>Portfolio · 2026</small></div></div>
+        <div class="b-photo"><img src="assets/priyal-cutout.png" alt="Priyal Bagri"></div>
+        <p class="b-name">Priyal Bagri</p>
+        <p class="b-role">Technical Project Manager</p>
+        <div class="b-facts"><div><small>Based in</small>Madison, WI</div><div><small>Studying</small>MS PM · Harrisburg</div><div><small>Class of</small>2028</div></div>
+        <div class="b-code"></div>
+      </div>
+    </div>
+    <p class="t-foot">© 2026 Priyal Bagri · Madison, Wisconsin</p>
+  </section>
+</main>
 
-<dialog class="story" id="story"><div class="story-in" id="story-in"></div></dialog>
+<script src="app.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="content.js"></script>
-<script src="site.js"></script>
 </body>
 </html>
