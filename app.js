@@ -70,7 +70,7 @@
   /* ---------- Journey: rolling outlined year + milestones moving up beside her ---------- */
   const STEPS = [
     { y: "2013", t: "High school", d: "Bharatiya Vidya Bhavan, Civil Lines, Nagpur, India." },
-    { y: "2016", t: "Managing partner", d: "Nathibai Tulsidas Investments, Nagpur. Ran the firm day to day while I studied." },
+    { y: "2016", t: "Managing partner", d: "Nathibai Tulsidas Investments, Nagpur." },
     { y: "2021", t: "Bachelor of Commerce", d: "Rashtrasant Tukadoji Maharaj Nagpur University." },
     { y: "2021", t: "Forbes India", d: "Featured in \u201cWomen of Dalal Street\u201d. Invited speaker at FICCI FLO Ahmedabad." },
     { y: "2022", t: "Founder, WedNet", d: "Took an idea to a tested prototype with a team of six. Stopped it before launch when the data said no." },
