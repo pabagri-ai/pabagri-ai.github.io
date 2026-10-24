@@ -355,7 +355,7 @@
   orbitReset = () => { look.pause(); oher.classList.remove("live"); look.currentTime = 0; lastO = -1; };
   // Let's talk: she walks in, plays once each time the section comes into view
   const ther = $("#ther"), drawTalk = ther ? renderer($("#tc"), ther) : null;
-  const walk = mk("assets/priyal-walk");
+  const walk = mk("assets/priyal-sit");
   if (ther && "IntersectionObserver" in window) new IntersectionObserver(es => es.forEach(en => {
     if (en.intersectionRatio >= .4) { if (walk.paused) { walk.currentTime = 0; walk.play().catch(() => {}); } }
     else if (!en.isIntersecting) { walk.pause(); walk.currentTime = 0; }
