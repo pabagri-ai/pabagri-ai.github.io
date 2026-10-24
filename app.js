@@ -348,7 +348,8 @@
   let lastO = -1, lastW = -1;
   const look = mk("assets/priyal-look");
   orbitPlay = () => { look.currentTime = 0; look.play().catch(() => {}); };
-  orbitReset = () => { look.pause(); look.currentTime = 0; lastO = -1; };
+  // hide the video layer while it jumps back, so the first-frame poster shows instead of the folded-arms frame
+  orbitReset = () => { look.pause(); oher.classList.remove("live"); look.currentTime = 0; lastO = -1; };
   // Let's talk: she walks in, plays once each time the section comes into view
   const ther = $("#ther"), drawTalk = ther ? renderer($("#tc"), ther) : null;
   const walk = mk("assets/priyal-walk");
