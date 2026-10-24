@@ -75,8 +75,7 @@
     { y: "2021", t: "Forbes India", d: "Featured in \u201cWomen of Dalal Street\u201d. Invited speaker at FICCI FLO Ahmedabad." },
     { y: "2022", t: "Founder, WedNet", d: "A platform bringing couples, guests and vendors together to plan weddings in one place." },
     { y: "2023", t: "650 families, one vote", d: "Led a campaign that brought my community to agree on new rules." },
-    { y: "2026", t: "Master's, Project Management", d: "Harrisburg University. Information Systems Engineering and Management. GPA 4.00." },
-    { y: "2028", t: "Graduation", d: "Next: tech and AI programs, delivering work that makes a real impact." }
+    { y: "2026", t: "Master's, Project Management", d: "Harrisburg University. Information Systems Engineering and Management. GPA 4.00." }
   ];
   const ytrack = $("#ytrack"), ltrack = $("#ltrack"), jbar = $("#jbar"), journey = $("#journey");
   if (journey) {
