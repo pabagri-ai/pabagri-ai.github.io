@@ -24,11 +24,14 @@
   const starts = chips.map((_, i) => { const a = rnd(i, 1) * Math.PI * 2, d = .75 + rnd(i, 2) * .6; return [Math.cos(a) * d, Math.sin(a) * d, .2 + rnd(i, 3) * .4]; });
   const oPage = $(".orbit-page"), oHer = $(".o-her"), oHead = $(".o-head");
   const clamp = v => Math.min(1, Math.max(0, v)), ease = v => 1 - Math.pow(1 - v, 3);
-  let spinT = .6, last = performance.now();
+  let spinT = .6, last = performance.now(), oStart = null;
   function spin(now) {
     const w = innerWidth, h = innerHeight, mobile = w <= 860;
-    const r = oPage.getBoundingClientRect();
-    const p = reduce ? 1 : clamp((h * .5 - r.top) / (r.height - h * .5));   // 0 as the page arrives, 1 when everything is in place
+    // plays by itself once the page is mostly in view; resets when you leave so it plays again next time
+    const r = oPage.getBoundingClientRect(), vis = Math.min(r.bottom, h) - Math.max(r.top, 0);
+    if (vis > h * .45 && oStart === null) oStart = now;
+    if (vis <= 0) oStart = null;
+    const p = reduce ? 1 : (oStart === null ? 0 : clamp((now - oStart) / 2800));
     // 1) she rises into view and comes into focus
     const a = ease(clamp(p / .3));
     oHer.style.transform = `translateX(-50%) translateY(${((1 - a) * 30).toFixed(2)}vh)`;
@@ -82,18 +85,21 @@
     ytrack.innerHTML = STEPS.map(s => `<div>${[...s.y].map(ch => `<span>${ch}</span>`).join("")}</div>`).join("");
     ltrack.innerHTML = STEPS.map(s => `<div class="j-item"><span class="yr">${s.y}</span><h3>${s.t}</h3><p>${s.d}</p></div>`).join("");
     const items = [...ltrack.children];
-    journey.style.height = (STEPS.length * 55 + 40) + "vh";
+    const list = $(".j-list");
     const ease = x => { const k = Math.min(1, Math.max(0, (x - .3) / .4)); return k * k * (3 - 2 * k); };  // hold on each year, then roll
+    const pad = () => { ltrack.style.paddingBottom = Math.max(0, list.clientHeight - items[0].offsetHeight) + "px"; };
     const jScroll = () => {
-      const r = journey.getBoundingClientRect(), total = r.height - innerHeight;
-      const p = Math.min(1, Math.max(0, -r.top / total)), f = p * (STEPS.length - 1);
-      const i = Math.floor(f), g = Math.min(STEPS.length - 1, i + ease(f - i)), on = Math.round(g);
+      const ih = items[0].offsetHeight, max = (STEPS.length - 1) * ih;
+      const f = Math.min(STEPS.length - 1, Math.max(0, list.scrollTop / ih));
+      const i = Math.floor(f), g = Math.min(STEPS.length - 1, i + ease(f - i)), on = Math.round(f);
       ytrack.style.transform = `translateY(${-g}em)`;
-      ltrack.style.transform = `translateY(${-g * items[0].offsetHeight}px)`;
       items.forEach((el, k) => el.classList.toggle("on", k === on));
-      jbar.style.width = (p * 100) + "%";
+      jbar.style.width = (max ? Math.min(1, list.scrollTop / max) * 100 : 0) + "%";
     };
-    addEventListener("scroll", jScroll, { passive: true }); addEventListener("resize", jScroll); jScroll();
+    items.forEach((el, k) => el.addEventListener("click", () => list.scrollTo({ top: k * items[0].offsetHeight, behavior: "smooth" })));
+    pad();
+    list.addEventListener("scroll", jScroll, { passive: true }); addEventListener("resize", () => { pad(); jScroll(); }); jScroll();
+
     // put the year's second digit (the 0) right behind her head; the other digits stay clear on either side
     const her = $(".j-her"), years = $(".j-years");
     const placeYear = () => {
