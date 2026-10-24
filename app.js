@@ -28,14 +28,17 @@
   function spin(now) {
     const w = innerWidth, h = innerHeight, mobile = w <= 860;
     // transition: nothing moves until the visitor has scrolled 25% past the Journey page,
-    // then a circle opens from where she stands, by itself, and closes again if they scroll back
+    // then the orbit page rises from the bottom, by itself, and closes again if they scroll back
     const sr = stage.getBoundingClientRect(), q = clamp(-sr.top / (sr.height - h));
     const target = (reduce || q >= .25) ? 1 : 0, dt = Math.min(.05, (now - last) / 1000);
     sT = target > sT ? Math.min(1, sT + dt / 1.1) : Math.max(0, sT - dt / .8);
-    const e = sT * sT * (3 - 2 * sT), cx = mobile ? 50 : 62;
-    oPage.style.clipPath = e >= 1 ? "none" : `circle(${(e * 150).toFixed(2)}% at ${cx}% 55%)`;
+    const e = sT * sT * (3 - 2 * sT);
+    // the orbit page rises from the bottom over the Journey, its curved top edge flattening as it arrives
+    oPage.style.transform = e >= 1 ? "" : `translateY(${((1 - e) * 102).toFixed(2)}%)`;
+    const rr = ((1 - e) * 22).toFixed(2);
+    oPage.style.borderRadius = e >= 1 ? "" : `50% 50% 0 0 / ${rr}vh ${rr}vh 0 0`;
     jPanel.style.transform = e > 0 ? `scale(${(1 - e * .08).toFixed(4)})` : ""; jPanel.style.filter = e > 0 && e < 1 ? `blur(${(e * 6).toFixed(1)}px)` : "";
-    // the circle always opens on the first frame of her video; it only plays once the circle is fully open
+    // the page always arrives on the first frame of her video; it only plays once the page is fully in
     if (sT > 0 && !opening) { opening = true; orbitReset(); }
     if (sT >= 1 && oStart === null) { oStart = now; orbitPlay(); }
     if (sT <= 0) { oStart = null; if (opening) { opening = false; orbitReset(); } }
