@@ -195,21 +195,46 @@
     });
   }
 
-  /* ---------- Recognition: each certificate unrolls from the top, one after another ---------- */
-  const certs = [...document.querySelectorAll(".cert-wrap")];
-  const unroll = () => {
-    const vh = innerHeight, mobile = innerWidth <= 860;
-    certs.forEach((wrap, i) => {
-      const r = wrap.getBoundingClientRect(), cert = wrap.firstElementChild, roll = wrap.lastElementChild;
-      const lag = mobile ? 0 : i * .12;
-      const k = reduce ? 1 : Math.min(1, Math.max(0, ((vh * .92 - r.top) / (vh * .55)) - lag));
-      const e = 1 - Math.pow(1 - k, 3);
-      cert.style.clipPath = e >= 1 ? "none" : `inset(0 0 ${((1 - e) * 100).toFixed(2)}% 0)`;
-      roll.style.transform = `translateY(${(e * cert.offsetHeight - 11).toFixed(1)}px)`;
-      roll.style.opacity = e >= 1 ? 0 : 1;
+  /* ---------- Recognition: each certificate is a rolled scroll tied with a ribbon.
+     Once the section is 30% in view, the bow unties, the ribbon falls away,
+     the scroll unrolls and confetti bursts. Plays by itself, one after another. ---------- */
+  const certs = [...document.querySelectorAll(".cert-wrap")], recog = $("#recognition");
+  certs.forEach(w => {
+    const r = document.createElement("div"); r.className = "ribbon"; r.setAttribute("aria-hidden", "true");
+    r.innerHTML = '<i class="band"></i><i class="bow"><b></b><b></b><s></s></i><i class="tail"></i><i class="tail"></i>';
+    w.appendChild(r);
+    const c = document.createElement("div"); c.className = "confetti"; c.setAttribute("aria-hidden", "true"); w.appendChild(c);
+  });
+  const COLORS = ["#1E2A55", "#F0C9C4", "#E8B04B", "#7A8BD8", "#FFFFFF", "#D96C7B"];
+  const burst = box => {
+    for (let i = 0; i < 46; i++) {
+      const p = document.createElement("span"), a = Math.random() * Math.PI - Math.PI, sp = 140 + Math.random() * 220;
+      p.style.background = COLORS[i % COLORS.length];
+      if (i % 3 === 0) p.style.borderRadius = "50%";
+      box.appendChild(p);
+      const dx = Math.cos(a) * sp, dy = Math.sin(a) * sp, rot = (Math.random() - .5) * 900;
+      p.animate([
+        { transform: "translate(0,0) rotate(0deg)", opacity: 1 },
+        { transform: `translate(${dx}px, ${dy}px) rotate(${rot / 2}deg)`, opacity: 1, offset: .4 },
+        { transform: `translate(${dx * 1.3}px, ${dy + 320}px) rotate(${rot}deg)`, opacity: 0 }
+      ], { duration: 1800 + Math.random() * 900, easing: "cubic-bezier(.2,.6,.4,1)", fill: "forwards" }).onfinish = () => p.remove();
+    }
+  };
+  const play = () => {
+    certs.forEach((w, i) => {
+      const t = i * 650;
+      setTimeout(() => w.classList.add("untie"), t);              // the bow loosens
+      setTimeout(() => w.classList.add("drop"), t + 550);         // the ribbon falls away
+      setTimeout(() => { w.style.setProperty("--h", w.firstElementChild.offsetHeight + "px"); w.classList.add("open"); }, t + 900);   // the scroll unrolls
+      setTimeout(() => burst(w.querySelector(".confetti")), t + 1500);   // confetti
+      setTimeout(() => w.classList.add("done"), t + 2000);
     });
   };
-  addEventListener("scroll", unroll, { passive: true }); addEventListener("resize", unroll); unroll();
+  if (reduce || !("IntersectionObserver" in window)) certs.forEach(w => w.classList.add("untie", "drop", "open", "done"));
+  else {
+    const io = new IntersectionObserver(es => { if (es[0].intersectionRatio >= .3) { io.disconnect(); play(); } }, { threshold: [.3] });
+    io.observe(recog);
+  }
 
   /* ---------- scroll transitions ---------- */
   const giant = $(".giant"), left = $(".hero-left"), cue = $(".scroll-cue");
