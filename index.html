@@ -54,30 +54,36 @@
       </div>
     </div>
   </section>
-  <section class="journey" id="journey" aria-label="Journey">
-    <div class="j-pin">
-      <div class="j-years" aria-hidden="true"><div class="j-ytrack" id="ytrack"></div></div>
-      <img class="j-her" src="assets/priyal-torso.png" alt="Priyal Bagri">
-      <div class="j-side">
-        <p class="kick">(02) — Journey</p>
-        <h2 class="j-title">Kinetic.<br><span>Learning as I go.</span></h2>
-        <p class="j-hint">Scroll the timeline ↕</p>
-        <div class="j-list"><div class="j-ltrack" id="ltrack"></div></div>
+  <!-- Journey slides out to the right while she walks in from the left, bringing the orbit page -->
+  <div class="slide-stage" id="journey">
+    <span class="slide-anchor" id="toolkit" aria-hidden="true"></span>
+    <div class="slide-pin">
+    <section class="journey" aria-label="Journey">
+      <div class="j-pin">
+        <div class="j-years" aria-hidden="true"><div class="j-ytrack" id="ytrack"></div></div>
+        <img class="j-her" src="assets/priyal-torso.png" alt="Priyal Bagri">
+        <div class="j-side">
+          <p class="kick">(02) — Journey</p>
+          <h2 class="j-title">Kinetic.<br><span>Learning as I go.</span></h2>
+          <p class="j-hint">Scroll the timeline ↕</p>
+          <div class="j-list"><div class="j-ltrack" id="ltrack"></div></div>
+        </div>
+        <div class="j-bar"><i id="jbar"></i></div>
       </div>
-      <div class="j-bar"><i id="jbar"></i></div>
-    </div>
-  </section>
-  <section class="orbit-page" id="toolkit" aria-label="Tools I use">
-    <div class="o-pin">
-    <div class="o-head">
-      <p class="kick">(03) — Toolkit</p>
-      <h2 class="o-title">Everything<br>in <span>orbit.</span></h2>
-      <p class="o-sub">The skills and tools I use to plan, track, report and deliver.</p>
-    </div>
-    <div class="orbit" id="orbit" aria-hidden="true"></div>
-    <img class="o-her" src="assets/priyal-cutout.png" alt="Priyal Bagri">
+    </section>
+    <section class="orbit-page" aria-label="Skills in orbit">
+      <div class="o-pin">
+      <div class="o-head">
+        <p class="kick">(03) — Toolkit</p>
+        <h2 class="o-title">Skills<br>in <span>orbit.</span></h2>
+        <p class="o-sub">The skills and tools I use to plan, track, report and deliver.</p>
       </div>
-  </section>
+      <div class="orbit" id="orbit" aria-hidden="true"></div>
+      <img class="o-her" src="assets/priyal-cutout.png" alt="Priyal Bagri">
+        </div>
+    </section>
+    </div>
+  </div>
   <section class="toolkit" id="table" aria-label="Toolkit">
     <div class="tk-head">
       <p class="kick">(03) — Toolkit, in detail</p>
@@ -140,6 +146,5 @@
 </main>
 
 <script src="app.js"></script>
-
 </body>
 </html>

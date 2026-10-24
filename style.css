@@ -225,8 +225,13 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 860px) { .tk-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; } .el .s { font-size: 1.25rem; } }
 
 /* ---- Everything in orbit: her tools circle around her, on their own page ---- */
-.orbit-page { position: relative; background: #fff; border-top: 1px solid var(--line); }
-.o-pin { position: sticky; top: 0; height: 100vh; height: 100svh; min-height: 640px; overflow: hidden; }
+.orbit-page { position: absolute; inset: 0; background: #fff; z-index: 1; }
+/* Journey -> orbit: the stage holds one screen while the Journey slides off to the right */
+.slide-stage { position: relative; height: 200vh; height: 200svh; border-top: 1px solid var(--line); }
+.slide-anchor { position: absolute; left: 0; top: 100vh; top: 100svh; width: 1px; height: 1px; }
+.slide-pin { position: sticky; top: 0; height: 100vh; height: 100svh; min-height: 640px; overflow: hidden; }
+.slide-pin > .journey { position: absolute; inset: 0; z-index: 2; border-top: 0; box-shadow: -30px 0 60px -20px rgba(20,27,56,.35); will-change: transform; }
+.o-pin { position: absolute; inset: 0; overflow: hidden; }
 .o-head, .o-her { will-change: transform, opacity, filter; }
 .o-head { position: absolute; left: clamp(16px, 4vw, 48px); top: 50%; transform: translateY(-50%); z-index: 4; max-width: 420px; }
 .o-title { margin-top: 10px; font-family: var(--display); font-weight: 400; font-size: clamp(3.4rem, 7.5vw, 7.5rem); line-height: .88; text-transform: uppercase; }

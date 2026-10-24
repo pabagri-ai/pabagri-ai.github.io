@@ -22,20 +22,23 @@
   // each skill starts somewhere off screen and flies in at its own moment
   const rnd = (i, k) => { const x = Math.sin(i * 127.1 + k * 311.7) * 43758.5453; return x - Math.floor(x); };
   const starts = chips.map((_, i) => { const a = rnd(i, 1) * Math.PI * 2, d = .75 + rnd(i, 2) * .6; return [Math.cos(a) * d, Math.sin(a) * d, .2 + rnd(i, 3) * .4]; });
-  const oPage = $(".orbit-page"), oHer = $(".o-her"), oHead = $(".o-head");
+  const oPage = $(".orbit-page"), oHer = $(".o-her"), oHead = $(".o-head"), stage = $(".slide-stage"), jPanel = $(".slide-pin > .journey");
   const clamp = v => Math.min(1, Math.max(0, v)), ease = v => 1 - Math.pow(1 - v, 3);
   let spinT = .6, last = performance.now(), oStart = null;
   function spin(now) {
     const w = innerWidth, h = innerHeight, mobile = w <= 860;
     // plays by itself once the page is mostly in view; resets when you leave so it plays again next time
-    const r = oPage.getBoundingClientRect(), vis = Math.min(r.bottom, h) - Math.max(r.top, 0);
-    if (vis > h * .45 && oStart === null) oStart = now;
-    if (vis <= 0) oStart = null;
+    // slide progress: 0 = Journey covers the screen, 1 = Journey has slid off to the right
+    const sr = stage.getBoundingClientRect(), q = reduce ? 1 : clamp(-sr.top / (sr.height - h));
+    jPanel.style.transform = q > 0 ? `translateX(${(q * 105).toFixed(2)}%)` : "";
+    if (q >= .97 && oStart === null) oStart = now;
+    if (q < .5) oStart = null;
     const p = reduce ? 1 : (oStart === null ? 0 : clamp((now - oStart) / 2800));
     // 1) she rises into view and comes into focus
-    const a = ease(clamp(p / .3));
-    oHer.style.transform = `translateX(-50%) translateY(${((1 - a) * 30).toFixed(2)}vh)`;
-    oHer.style.opacity = a.toFixed(3); oHer.style.filter = a < 1 ? `blur(${((1 - a) * 12).toFixed(1)}px)` : "";
+    // 1) she walks in from the left as the Journey slides away (a small step bob while moving)
+    const wk = clamp(q / .9), off = (1 - ease(wk)) * (w * .75), bob = wk < 1 ? Math.abs(Math.sin(wk * Math.PI * 7)) * -10 : 0;
+    oHer.style.transform = `translateX(calc(-50% - ${off.toFixed(1)}px)) translateY(${bob.toFixed(1)}px) rotate(${(wk < 1 ? Math.sin(wk * Math.PI * 7) * 1.2 : 0).toFixed(2)}deg)`;
+    oHer.style.opacity = 1; oHer.style.filter = "";
     // 3) the heading slides in last
     const hd = ease(clamp((p - .72) / .22));
     oHead.style.transform = `translate(${(-(1 - hd) * 40).toFixed(2)}vw, ${mobile ? "0" : "-50%"})`; oHead.style.opacity = hd.toFixed(3);
