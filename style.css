@@ -300,13 +300,13 @@ a { color: inherit; text-decoration: none; }
 .cert-wrap.done .roll { opacity: 0; }
 /* the ribbon tied around the roll */
 .ribbon { position: absolute; left: 50%; top: 23px; width: 0; height: 0; z-index: 4; pointer-events: none; transition: transform .9s cubic-bezier(.5,0,.75,0), opacity .9s; }
-.ribbon .band { position: absolute; left: -11px; top: -26px; width: 22px; height: 52px; background: linear-gradient(90deg, #c98a93, #F0C9C4 45%, #c98a93); border-radius: 2px; }
+.ribbon .band { position: absolute; left: -11px; top: -26px; width: 22px; height: 52px; background: linear-gradient(90deg, #9E1B24, #D7303B 45%, #9E1B24); border-radius: 2px; }
 .ribbon .bow { position: absolute; left: 0; top: 0; transition: transform .5s cubic-bezier(.3,1.6,.5,1); }
-.ribbon .bow b { position: absolute; top: -14px; width: 30px; height: 26px; border: 6px solid #E2A9B1; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; background: rgba(240,201,196,.55); }
+.ribbon .bow b { position: absolute; top: -14px; width: 30px; height: 26px; border: 6px solid #C8242F; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; background: rgba(215,48,59,.25); }
 .ribbon .bow b:first-child { right: 2px; transform: rotate(-18deg); border-radius: 60% 20% 60% 60%; }
 .ribbon .bow b:nth-child(2) { left: 2px; transform: rotate(18deg); border-radius: 20% 60% 60% 60%; }
-.ribbon .bow s { position: absolute; left: -8px; top: -8px; width: 16px; height: 16px; border-radius: 5px; background: #c98a93; box-shadow: 0 2px 4px rgba(0,0,0,.2); }
-.ribbon .tail { position: absolute; top: 2px; width: 10px; height: 34px; background: #E2A9B1; clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%); transform-origin: top center; transition: transform .5s; }
+.ribbon .bow s { position: absolute; left: -8px; top: -8px; width: 16px; height: 16px; border-radius: 5px; background: #9E1B24; box-shadow: 0 2px 4px rgba(0,0,0,.25); }
+.ribbon .tail { position: absolute; top: 2px; width: 10px; height: 34px; background: #C8242F; clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%); transform-origin: top center; transition: transform .5s; }
 .ribbon .tail:nth-of-type(3) { left: -12px; transform: rotate(22deg); }
 .ribbon .tail:nth-of-type(4) { left: 2px; transform: rotate(-22deg); }
 /* untie: the bow loosens and the tails swing apart */

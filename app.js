@@ -205,7 +205,7 @@
     w.appendChild(r);
     const c = document.createElement("div"); c.className = "confetti"; c.setAttribute("aria-hidden", "true"); w.appendChild(c);
   });
-  const COLORS = ["#1E2A55", "#F0C9C4", "#E8B04B", "#7A8BD8", "#FFFFFF", "#D96C7B"];
+  const COLORS = ["#1E2A55", "#D4A53C", "#2F4FD0", "#F1C75B", "#4A6CF0", "#B8862B"];   // blue and gold
   const burst = box => {
     for (let i = 0; i < 46; i++) {
       const p = document.createElement("span"), a = Math.random() * Math.PI - Math.PI, sp = 140 + Math.random() * 220;
