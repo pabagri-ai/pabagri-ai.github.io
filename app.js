@@ -24,21 +24,21 @@
   const starts = chips.map((_, i) => { const a = rnd(i, 1) * Math.PI * 2, d = .75 + rnd(i, 2) * .6; return [Math.cos(a) * d, Math.sin(a) * d, .2 + rnd(i, 3) * .4]; });
   const oPage = $(".orbit-page"), oHer = $(".o-her"), oHead = $(".o-head"), stage = $(".slide-stage"), jPanel = $(".slide-pin > .journey");
   const clamp = v => Math.min(1, Math.max(0, v)), ease = v => 1 - Math.pow(1 - v, 3);
-  let spinT = .6, last = performance.now(), oStart = null;
+  let spinT = .6, last = performance.now(), oStart = null, sT = 0, orbitPlay = () => {};
   function spin(now) {
     const w = innerWidth, h = innerHeight, mobile = w <= 860;
-    // plays by itself once the page is mostly in view; resets when you leave so it plays again next time
-    // slide progress: 0 = Journey covers the screen, 1 = Journey has slid off to the right
-    const sr = stage.getBoundingClientRect(), q = reduce ? 1 : clamp(-sr.top / (sr.height - h));
-    jPanel.style.transform = q > 0 ? `translateX(${(q * 105).toFixed(2)}%)` : "";
-    if (q >= .97 && oStart === null) oStart = now;
-    if (q < .5) oStart = null;
+    // transition: nothing moves until the visitor has scrolled 16% past the Journey page,
+    // then a circle opens from where she stands, by itself, and closes again if they scroll back
+    const sr = stage.getBoundingClientRect(), q = clamp(-sr.top / (sr.height - h));
+    const target = (reduce || q >= .16) ? 1 : 0, dt = Math.min(.05, (now - last) / 1000);
+    sT = target > sT ? Math.min(1, sT + dt / 1.1) : Math.max(0, sT - dt / .8);
+    const e = sT * sT * (3 - 2 * sT), cx = mobile ? 50 : 62;
+    oPage.style.clipPath = e >= 1 ? "none" : `circle(${(e * 150).toFixed(2)}% at ${cx}% 55%)`;
+    jPanel.style.transform = e > 0 ? `scale(${(1 - e * .08).toFixed(4)})` : ""; jPanel.style.filter = e > 0 && e < 1 ? `blur(${(e * 6).toFixed(1)}px)` : "";
+    if (sT >= 1 && oStart === null) { oStart = now; orbitPlay(); }
+    if (sT <= 0) oStart = null;
     const p = reduce ? 1 : (oStart === null ? 0 : clamp((now - oStart) / 2800));
-    // 1) she rises into view and comes into focus
-    // 1) she walks in from the left as the Journey slides away (a small step bob while moving)
-    const wk = clamp(q / .9), off = (1 - ease(wk)) * (w * .75), bob = wk < 1 ? Math.abs(Math.sin(wk * Math.PI * 7)) * -10 : 0;
-    oHer.style.transform = `translateX(calc(-50% - ${off.toFixed(1)}px)) translateY(${bob.toFixed(1)}px) rotate(${(wk < 1 ? Math.sin(wk * Math.PI * 7) * 1.2 : 0).toFixed(2)}deg)`;
-    oHer.style.opacity = 1; oHer.style.filter = "";
+    oHer.style.transform = "translateX(-50%)";
     // 3) the heading slides in last
     const hd = ease(clamp((p - .72) / .22));
     oHead.style.transform = `translate(${(-(1 - hd) * 40).toFixed(2)}vw, ${mobile ? "0" : "-50%"})`; oHead.style.opacity = hd.toFixed(3);
@@ -340,6 +340,24 @@
     requestAnimationFrame(draw);
   }
   idle.addEventListener("loadeddata", () => { idle.play().catch(() => {}); draw(); }, { once: true });
+
+  // Skills in orbit: she looks around as the skills form, then folds her arms and holds that pose
+  const oher = $("#oher"), drawOrbit = oher ? renderer($("#oc"), oher) : null;
+  const look = mk("assets/priyal-look");
+  orbitPlay = () => { look.currentTime = 0; look.play().catch(() => {}); };
+  // Let's talk: she walks in, plays once each time the section comes into view
+  const ther = $("#ther"), drawTalk = ther ? renderer($("#tc"), ther) : null;
+  const walk = mk("assets/priyal-walk");
+  if (ther && "IntersectionObserver" in window) new IntersectionObserver(es => es.forEach(en => {
+    if (en.intersectionRatio >= .4) { if (walk.paused) { walk.currentTime = 0; walk.play().catch(() => {}); } }
+    else if (!en.isIntersecting) { walk.pause(); walk.currentTime = 0; }
+  }), { threshold: [0, .4] }).observe(ther);
+  let lastO = -1, lastW = -1;
+  (function draw2() {
+    if (drawOrbit && look.readyState >= 2 && look.currentTime !== lastO && near(oher)) { lastO = look.currentTime; drawOrbit(look); }
+    if (drawTalk && walk.readyState >= 2 && walk.currentTime !== lastW && near(ther)) { lastW = walk.currentTime; drawTalk(walk); }
+    requestAnimationFrame(draw2);
+  })();
 
   // "Hear my intro": plays her talking clip with sound, then back to standing and waving
   const btn = $("#intro");
