@@ -31,7 +31,7 @@
     // then the orbit page rises from the bottom, by itself, and closes again if they scroll back
     const sr = stage.getBoundingClientRect(), q = clamp(-sr.top / (sr.height - h));
     const target = (reduce || q >= .25) ? 1 : 0, dt = Math.min(.05, (now - last) / 1000);
-    sT = target > sT ? Math.min(1, sT + dt / 1.1) : Math.max(0, sT - dt / .8);
+    if (target > sT) sT = Math.min(1, sT + dt / 1.1); else if (target < sT) sT = Math.max(0, sT - dt / .8);   // hold still once it arrives
     const e = sT * sT * (3 - 2 * sT);
     // the orbit page rises from the bottom over the Journey, its curved top edge flattening as it arrives
     oPage.style.transform = e >= 1 ? "" : `translateY(${((1 - e) * 102).toFixed(2)}%)`;
