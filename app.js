@@ -34,7 +34,7 @@
     if (target > sT) sT = Math.min(1, sT + dt / 1.1); else if (target < sT) sT = Math.max(0, sT - dt / .8);   // hold still once it arrives
     const e = sT * sT * (3 - 2 * sT);
     // the orbit page rises from the bottom over the Journey, its curved top edge flattening as it arrives
-    oPage.style.transform = e >= 1 ? "" : `translateY(${((1 - e) * 102).toFixed(2)}%)`;
+    oPage.style.transform = e >= 1 ? "none" : `translateY(${((1 - e) * 102).toFixed(2)}%)`;
     const rr = ((1 - e) * 22).toFixed(2);
     oPage.style.borderRadius = e >= 1 ? "" : `50% 50% 0 0 / ${rr}vh ${rr}vh 0 0`;
     jPanel.style.transform = e > 0 ? `scale(${(1 - e * .08).toFixed(4)})` : ""; jPanel.style.filter = e > 0 && e < 1 ? `blur(${(e * 6).toFixed(1)}px)` : "";
@@ -334,8 +334,8 @@
   const drawHero = renderer(canvas, box);
   if (!drawHero) return;
   const jher = $("#jher"), drawJourney = jher ? renderer($("#jc"), jher) : null;
-  const mk = src => { const v = document.createElement("video"); const mp4 = v.canPlayType('video/mp4; codecs="avc1.640028"');
-    Object.assign(v, { src: mp4 ? src + ".mp4" : src + ".webm", muted: true, playsInline: true, preload: "auto" }); v.setAttribute("playsinline", ""); v.setAttribute("muted", ""); return v; };
+  const mk = (src, ver) => { const v = document.createElement("video"); const mp4 = v.canPlayType('video/mp4; codecs="avc1.640028"'); const q = ver ? "?v=" + ver : "";
+    Object.assign(v, { src: mp4 ? src + ".mp4" + q : src + ".webm" + q, muted: true, playsInline: true, preload: "auto" }); v.setAttribute("playsinline", ""); v.setAttribute("muted", ""); return v; };
   const idle = mk("assets/priyal-idle"), talk = mk("assets/priyal-talking");
   idle.loop = true;
   let cur = idle, lastT = -1, lastV = null, lastJ = -1;
@@ -355,7 +355,7 @@
   orbitReset = () => { look.pause(); oher.classList.remove("live"); look.currentTime = 0; lastO = -1; };
   // Let's talk: she walks in, plays once each time the section comes into view
   const ther = $("#ther"), drawTalk = ther ? renderer($("#tc"), ther) : null;
-  const walk = mk("assets/priyal-sit");
+  const walk = mk("assets/priyal-sit", "1792905700");
   if (ther && "IntersectionObserver" in window) new IntersectionObserver(es => es.forEach(en => {
     if (en.intersectionRatio >= .4) { if (walk.paused) { walk.currentTime = 0; walk.play().catch(() => {}); } }
     else if (!en.isIntersecting) { walk.pause(); walk.currentTime = 0; }
